@@ -1,4 +1,4 @@
-package com.pianma.bubble.ex05;
+package com.pianma.bubble.ex06;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -28,8 +28,12 @@ public class Player extends JLabel implements Moveable {
     public Player(){
         initObject();
         initSetting();
+        initBackgroundService();
     }
 
+    private  void initBackgroundService(){
+        new Thread(new BackgroundPlayerService(this)).start();
+    }
     private void initObject(){
         playerR = new ImageIcon("image/playerR.png");
         playerL = new ImageIcon("image/playerL.png");
