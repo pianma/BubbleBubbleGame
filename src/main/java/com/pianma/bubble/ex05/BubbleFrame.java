@@ -1,4 +1,4 @@
-package com.pianma.bubble.ex04;
+package com.pianma.bubble.ex05;
 
 import javax.swing.*;
 import java.awt.*;
@@ -50,14 +50,12 @@ public class BubbleFrame extends JFrame {
                             player.right();
                         break;
                     case KeyEvent.VK_UP:
-                        player.up();
+                        if (!player.isUp() && !player.isDown()) {
+                            player.up();
+                        }
                         break;
-                    case KeyEvent.VK_DOWN:
-                        player.down();
-                        break;
+                     }
                 }
-            }
-
 
             //키보드 해제 이벤트 핸들러
             @Override

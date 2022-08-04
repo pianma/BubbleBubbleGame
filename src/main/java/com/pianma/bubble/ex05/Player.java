@@ -1,4 +1,4 @@
-package com.pianma.bubble.ex04;
+package com.pianma.bubble.ex05;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -18,6 +18,9 @@ public class Player extends JLabel implements Moveable {
     private boolean up;
     private boolean down;
 
+    //플레이어 속도 상태
+    private final int SPEED = 4;
+    private final int JUMPSPEED = 2;
 
     private ImageIcon playerR, playerL;
 
@@ -53,7 +56,7 @@ public class Player extends JLabel implements Moveable {
             left = true;
             while (left) {
                 setIcon(playerL);
-                x = x - 1;
+                x = x - SPEED;
                 setLocation(x, y);
                 try {
                     Thread.sleep(10);
@@ -72,7 +75,7 @@ public class Player extends JLabel implements Moveable {
             right = true;
         while (right){
             setIcon(playerR);
-            x= x+1;
+            x= x+SPEED;
             setLocation(x, y);
             try {
                 Thread.sleep(10);
@@ -84,13 +87,41 @@ public class Player extends JLabel implements Moveable {
 
     }
 
+    //left+up,right+up
     @Override
     public void up() {
-
+        System.out.println("up");
+        up=true;
+        new Thread(()->{
+            for(int i=0; i<130/JUMPSPEED; i++){
+                y=y-JUMPSPEED;
+                setLocation(x,y);
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            up = false;
+            down();
+        }).start();
     }
 
     @Override
     public void down() {
-
+        System.out.println("down");
+        down = true;
+        new Thread(()->{
+            for(int i=0; i<130/JUMPSPEED; i++){
+                y=y+JUMPSPEED;
+                setLocation(x,y);
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            down = false;
+        }).start();
     }
 }
