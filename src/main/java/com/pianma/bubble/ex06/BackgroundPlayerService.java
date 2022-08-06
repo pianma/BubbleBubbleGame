@@ -13,7 +13,7 @@ public class BackgroundPlayerService implements Runnable{
     private Player player;
 
     public BackgroundPlayerService(Player player){
-        this.player = this.player;
+        this.player = player;
         try {
             image = ImageIO.read(new File("image/test.png"));
         } catch (Exception e) {
@@ -27,9 +27,14 @@ public class BackgroundPlayerService implements Runnable{
 
             Color leftColor = new Color(image.getRGB(player.getX() - 10, player.getY() + 25));
             Color rightColor = new Color(image.getRGB(player.getX() + 50 + 10, player.getY() + 25));
-            System.out.println("leftcolor : " + leftColor);
-            System.out.println("rightcolor : " + rightColor);
+            //System.out.println("leftcolor : " + leftColor);
+            //System.out.println("rightcolor : " + rightColor);
 
+            if(leftColor.getRed() == 255 && leftColor.getGreen() ==0 && leftColor.getBlue() ==0){
+                System.out.println("왼쪽 벽에 충돌");
+            } else if (rightColor.getRed() ==255 && rightColor.getGreen() ==0 && leftColor.getBlue() ==0) {
+                System.out.println("오른쪽 벽 충돌");
+            }
             try {
                 Thread.sleep(10);
             } catch (InterruptedException e) {
