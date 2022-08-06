@@ -1,4 +1,4 @@
-package com.pianma.bubble.ex06;
+package com.pianma.bubble.ex07;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -27,13 +27,19 @@ public class BackgroundPlayerService implements Runnable{
 
             Color leftColor = new Color(image.getRGB(player.getX() - 10, player.getY() + 25));
             Color rightColor = new Color(image.getRGB(player.getX() + 50 + 10, player.getY() + 25));
-            //System.out.println("leftcolor : " + leftColor);
-            //System.out.println("rightcolor : " + rightColor);
+
 
             if(leftColor.getRed() == 255 && leftColor.getGreen() ==0 && leftColor.getBlue() ==0){
                 System.out.println("왼쪽 벽에 충돌");
-            } else if (rightColor.getRed() ==255 && rightColor.getGreen() ==0 && leftColor.getBlue() ==0) {
+                player.setLeftWallCrash(true);
+                player.setLeft(false);
+            } else if (rightColor.getRed() ==255 && rightColor.getGreen() ==0 && rightColor.getBlue() ==0) {
                 System.out.println("오른쪽 벽 충돌");
+                player.setRightWallCrash(true);
+                player.setRight(false);
+            }else{
+                player.setLeftWallCrash(false);
+                player.setRightWallCrash(false);
             }
             try {
                 Thread.sleep(10);

@@ -1,4 +1,4 @@
-package com.pianma.bubble.ex06;
+package com.pianma.bubble.ex07;
 
 import javax.swing.*;
 import java.awt.*;
@@ -42,11 +42,11 @@ public class BubbleFrame extends JFrame {
 
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_LEFT:
-                        if (!player.isLeft())
+                        if (!player.isLeft() && !player.isLeftWallCrash())
                             player.left();
                         break;
                     case KeyEvent.VK_RIGHT:
-                        if (!player.isRight())
+                        if (!player.isRight() && !player.isRightWallCrash())
                             player.right();
                         break;
                     case KeyEvent.VK_UP:
