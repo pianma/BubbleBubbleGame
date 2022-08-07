@@ -1,4 +1,4 @@
-package com.pianma.bubble.ex08;
+package com.pianma.bubble.ex09;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -58,6 +58,45 @@ public class Player extends JLabel implements Moveable {
     }
 
     @Override
+    public void up() {
+        up = true;
+        new Thread(() -> {
+
+            for (int i = 0; i < 130/JUMPSPEED; i++) {
+                y = y - (JUMPSPEED);
+                setLocation(x, y);
+                try {
+                    Thread.sleep(5);
+                } catch (Exception e) {
+                    System.out.println("위쪽 이동중 인터럽트 발생 : " + e.getMessage());
+                }
+            }
+
+            up = false;
+            down();
+        }).start();
+
+    }
+
+    @Override
+    public void down() {
+        System.out.println("하강중");
+        down = true;
+        new Thread(() -> {
+            while (down) {
+                y = y + (JUMPSPEED);
+                setLocation(x, y);
+                try {
+                    Thread.sleep(3);
+                } catch (Exception e) {
+                    System.out.println("아래쪽 이동중 인터럽트 발생 : " + e.getMessage());
+                }
+            }
+
+        }).start();
+    }
+
+    @Override
     public void left() {
         System.out.println("left");
         new Thread(()->  {
@@ -81,55 +120,17 @@ public class Player extends JLabel implements Moveable {
         System.out.println("right");
         new Thread(()->  {
             right = true;
-        while (right){
-            setIcon(playerR);
-            x= x+SPEED;
-            setLocation(x, y);
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        }).start();
-
-    }
-
-    //left+up,right+up
-    @Override
-    public void up() {
-        System.out.println("up");
-        up=true;
-        new Thread(()->{
-            for(int i=0; i<130/JUMPSPEED; i++){
-                y=y-JUMPSPEED;
-                setLocation(x,y);
+            while (right){
+                setIcon(playerR);
+                x= x+SPEED;
+                setLocation(x, y);
                 try {
-                    Thread.sleep(5);
+                    Thread.sleep(10);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
             }
-            up = false;
-            down();
         }).start();
-    }
 
-    @Override
-    public void down() {
-        System.out.println("down");
-        down = true;
-        new Thread(() -> {
-            while (down) {
-                y = y + (JUMPSPEED);
-                setLocation(x, y);
-                try {
-                    Thread.sleep(3);
-                } catch (Exception e) {
-                    System.out.println("아래쪽 이동중 인터럽트 발생 : " + e.getMessage());
-                }
-            }
-
-        }).start();
     }
 }

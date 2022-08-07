@@ -1,4 +1,4 @@
-package com.pianma.bubble.ex08;
+package com.pianma.bubble.ex10;
 
 import javax.swing.*;
 import java.awt.*;
@@ -38,36 +38,36 @@ public class BubbleFrame extends JFrame {
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                System.out.println(e.getKeyCode());
-
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_LEFT:
-                        if (!player.isLeft() && !player.isLeftWallCrash())
+                        if (!player.isLeft())
                             player.left();
                         break;
                     case KeyEvent.VK_RIGHT:
-                        if (!player.isRight() && !player.isRightWallCrash())
+                        if (!player.isRight())
                             player.right();
                         break;
                     case KeyEvent.VK_UP:
                         if (!player.isUp() && !player.isDown())
                             player.up();
-                            break;
-
-                     }
+                        break;
+                    case KeyEvent.VK_SPACE:
+                     Bubble bubble = new Bubble(player);
+                     add(bubble);
+                        break;
                 }
+            }
 
             //키보드 해제 이벤트 핸들러
             @Override
             public void keyReleased(KeyEvent e) {
-                switch (e.getKeyCode()){
-                    case KeyEvent.VK_LEFT:
-                        player.setLeft(false);
-                        break;
+                switch (e.getKeyCode()) {
                     case KeyEvent.VK_RIGHT:
                         player.setRight(false);
                         break;
-
+                    case KeyEvent.VK_LEFT:
+                        player.setLeft(false);
+                        break;
                 }
             }
         });

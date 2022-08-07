@@ -1,4 +1,4 @@
-package com.pianma.bubble.ex08;
+package com.pianma.bubble.ex10;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
