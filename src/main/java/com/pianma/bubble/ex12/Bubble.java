@@ -10,6 +10,7 @@ import javax.swing.*;
 public class Bubble extends JLabel implements Moveable {
 
     //의존성 컴포지션
+    private BubbleFrame mContext;
     private Player player;
     private BackgroundBubbleService backgroundBubbleService;
 
@@ -29,8 +30,9 @@ public class Bubble extends JLabel implements Moveable {
     private ImageIcon bubbled;  //적을 가둔 물방울
     private  ImageIcon bomb; //물방울 터진 상태
 
-    public Bubble(Player player){
-        this.player = player;
+    public Bubble(BubbleFrame mContext){
+        this.mContext = mContext;
+        this.player = mContext.getPlayer();
         initObject();
         initSetting();
         initThread();
@@ -75,6 +77,7 @@ public class Bubble extends JLabel implements Moveable {
             y--;
             setLocation(x, y);
             if(backgroundBubbleService.topWall()){
+                up = false;
                 break;
             }
             try {
@@ -82,6 +85,19 @@ public class Bubble extends JLabel implements Moveable {
             }catch  (InterruptedException e){
                 e.printStackTrace();
             }
+        }
+        clearBubble();
+    }
+
+    public void clearBubble(){
+        try {
+            Thread.sleep(3000);
+            setIcon(bomb);
+            Thread.sleep(500);
+            mContext.remove(this);
+            mContext.repaint();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -93,6 +109,7 @@ public class Bubble extends JLabel implements Moveable {
             setLocation(x, y);
 
             if(backgroundBubbleService.leftWall()){
+                left = false;
                 break;
             }
             try {
@@ -111,6 +128,7 @@ public class Bubble extends JLabel implements Moveable {
             x++;
             setLocation(x, y);
             if(backgroundBubbleService.rightWall()){
+                right = false;
                 break;
             }
             try {
