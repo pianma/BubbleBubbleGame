@@ -8,14 +8,14 @@ import javax.swing.*;
 
 @Getter
 @Setter
-public class Player extends JLabel implements Moveable {
+public class Enemy extends JLabel implements Moveable {
 
     private BubbleFrame mContext;
     private int x;
     private int y;
 
-    //플레이어의 방향
-    private PlayerDirection playerDirection;
+    //적군 방향
+    private EnemyDirection enemyDirection;
 
 
    private boolean left;
@@ -23,64 +23,45 @@ public class Player extends JLabel implements Moveable {
     private boolean up;
     private boolean down;
 
-    //벽에 충돌한 상태
-    private boolean leftWallCrash;
-    private boolean rightWallCrash;
-
-    //플레이어 속도 상태
-    private final int SPEED = 4;
-    private final int JUMPSPEED = 2;
-
-    private ImageIcon playerR, playerL;
 
 
-    public Player(BubbleFrame mContext){
+    //적군 속도 상태
+    private final int SPEED = 3;
+    private final int JUMPSPEED = 1;
+
+    private ImageIcon enemyR, enemyL;
+
+
+    public Enemy(BubbleFrame mContext){
         this.mContext = mContext;
         initObject();
         initSetting();
-        initBackgroundService();
+       initBackgroundEnemyService();
     }
 
-    private  void initBackgroundService(){
-        new Thread(new BackgroundPlayerService(this)).start();
+    private  void initBackgroundEnemyService(){
+//        new Thread(new BackgroundEnemyService(this)).start();
     }
     private void initObject(){
-        playerR = new ImageIcon("image/playerR.png");
-        playerL = new ImageIcon("image/playerL.png");
+        enemyR = new ImageIcon("image/enemyR.png");
+        enemyL = new ImageIcon("image/enemyL.png");
     }
 
     private void initSetting(){
-        x= 80;
-        y = 535;
+        x= 480;
+        y = 178;
 
         left = false;
         right = false;
         up = false;
         down =false;
 
-        leftWallCrash = false;
-        rightWallCrash = false;
-
-        playerDirection = playerDirection.RIGHT;
-        setIcon(playerR);
+        enemyDirection = enemyDirection.RIGHT;
+        setIcon(enemyR);
         setSize(50,50);
         setLocation(x, y);
     }
 
-
-    @Override
-    public void attack() {
-        new Thread(()->{
-            Bubble bubble = new Bubble(mContext);
-            mContext.add(bubble);
-            if(playerDirection == PlayerDirection.LEFT){
-                bubble.left();
-            }else{
-                bubble.right();
-            }
-        }).start();
-
-    }
 
     @Override
     public void up() {
@@ -124,11 +105,11 @@ public class Player extends JLabel implements Moveable {
     @Override
     public void left() {
         System.out.println("left");
-        playerDirection = playerDirection.LEFT;
+        enemyDirection = enemyDirection.LEFT;
         new Thread(()->  {
             left = true;
             while (left) {
-                setIcon(playerL);
+                setIcon(enemyL);
                 x = x - SPEED;
                 setLocation(x, y);
                 try {
@@ -144,11 +125,11 @@ public class Player extends JLabel implements Moveable {
     @Override
     public void right() {
         System.out.println("right");
-        playerDirection = playerDirection.RIGHT;
+        enemyDirection = enemyDirection.RIGHT;
         new Thread(()->  {
             right = true;
             while (right){
-                setIcon(playerR);
+                setIcon(enemyR);
                 x= x+SPEED;
                 setLocation(x, y);
                 try {
