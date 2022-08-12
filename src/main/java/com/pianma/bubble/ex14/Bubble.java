@@ -69,19 +69,27 @@ public class Bubble extends JLabel implements Moveable {
                 up = false;
                 break;
             }
-            try {
+        try{
+            if(state==0){
                 Thread.sleep(1);
+            }else{
+                Thread.sleep(10);
+            }
             }catch  (InterruptedException e){
                 e.printStackTrace();
             }
         }
+        if(state==0)
         clearBubble();
     }
 
     @Override
     public void attack() {
         state = 1;
+        enemy.setState(1);
         setIcon(bubbled);
+        mContext.remove(enemy); //메모리에서 사라지게함
+        mContext.repaint();
     }
 
     public void clearBubble(){
@@ -111,7 +119,10 @@ public class Bubble extends JLabel implements Moveable {
             if(Math.abs(x - enemy.getX()) > 40 && Math.abs(x - enemy.getX()) < 60 &&
                     Math.abs(y - enemy.getY()) > 0 && Math.abs(y - enemy.getY()) < 50){
                 System.out.println("물방울이 적군과 충돌됨");
-                attack();
+               if(enemy.getState()==0) {
+                   attack();
+                   break;
+               }
            }
 
             try {
@@ -132,6 +143,15 @@ public class Bubble extends JLabel implements Moveable {
             if(backgroundBubbleService.rightWall()){
                 right = false;
                 break;
+            }
+
+            if(Math.abs(x - enemy.getX()) > 40 && Math.abs(x - enemy.getX()) < 60 &&
+                    Math.abs(y - enemy.getY()) > 0 && Math.abs(y - enemy.getY()) < 50){
+                System.out.println("물방울이 적군과 충돌됨");
+                if(enemy.getState()==0) {
+                    attack();
+                    break;
+                }
             }
             try {
                 Thread.sleep(1);
