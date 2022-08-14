@@ -39,10 +39,11 @@ public class Enemy extends JLabel implements Moveable {
         initObject();
         initSetting();
        initBackgroundEnemyService();
+       right();
     }
 
     private  void initBackgroundEnemyService(){
-//        new Thread(new BackgroundEnemyService(this)).start();
+        new Thread(new BackgroundEnemyService(this)).start();
     }
     private void initObject(){
         enemyR = new ImageIcon("image/enemyR.png");
